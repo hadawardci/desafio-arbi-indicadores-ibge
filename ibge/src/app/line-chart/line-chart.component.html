@@ -1,0 +1,35 @@
+<h1>Indicadores IBGE - Turistas x ano</h1>
+<h2>{{indicador?.indicador}}</h2>
+
+<mat-form-field appearance="fill">
+    <mat-label>Países</mat-label>
+    <mat-select [formControl]="toppings" multiple (selectionChange)="selectionChange()">
+        <mat-select-trigger>
+            {{toppings.value ? toppings.value[0] : ''}}
+            <span *ngIf="toppings.value?.length > 1" class="example-additional-selection">
+                (+{{toppings.value.length - 1}} {{toppings.value?.length === 2 ? 'other' : 'others'}})
+            </span>
+        </mat-select-trigger>
+        <mat-option *ngFor="let topping of paises" [value]="topping.id['ISO-3166-1-ALPHA-2']">
+            {{topping.nome.abreviado}}
+        </mat-option>
+    </mat-select>
+</mat-form-field>
+
+
+
+<div *ngIf="indicadores">
+    <canvas baseChart width="500" height="200" [datasets]="lineChartData" [labels]="lineChartLabels"
+        [options]="lineChartOptions" [legend]="lineChartLegend" [chartType]="'line'">
+    </canvas>
+</div>
+
+<!-- <ul *ngIf="indicadores">
+    <li *ngFor="let series of indicadores[0].series; index as i; first as isFirst">
+        {{series.pais.nome}}
+        <div *ngFor="let serie of series.serie; index as i; first as isFirst">
+
+            <pre> {{serie | json}}</pre>
+        </div>
+    </li>
+</ul> -->
